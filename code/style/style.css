@@ -1,0 +1,29 @@
+body {
+    background-color: skyblue;
+    font-family: 'Cambria';
+}
+
+button {
+    padding: 15px;
+    margin: 20px;
+}
+
+#high-scores {
+    float: left;
+    padding: 10px;
+    margin: 10px;
+}
+#timer {
+    display: flex;
+    justify-content: flex-end;
+    margin: 5px;
+}
+
+.startBox {
+    margin-left: 150px;
+    margin-right: 150px;
+    width: auto;
+    text-align: center;
+    display: inline-block;
+    
+}
