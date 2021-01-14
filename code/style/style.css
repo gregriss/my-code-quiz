@@ -3,66 +3,71 @@
 }
 
 body {
-    background-color: rgb(45, 45, 45);
-    color: lightgreen;
-    font-family: 'Cambria';
+    background-color: rgb(39, 39, 39);
+    color: green;
+    font-family: 'Courier';
     font-size: 22px;
 }
 
 header {
     display: flex;
     justify-content: space-between;
+    border-bottom: solid rgb(156, 172, 187) 1px;
 }
 
-button {
+button,
+#submit {
     padding: 12px;
     margin: 20px;
     background-color: rgb(156, 172, 187);
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     font-family: 'Courier New';
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 300;
     cursor: pointer;
-    transition-duration: 200ms;
+    transition-duration: 175ms;
 }
 
 button:hover {
     padding: 14px;
     margin: 18px;
     background-color: rgb(178, 250, 150);
-    font-weight: 800;
+    font-weight: 600;
 }
 
 ::selection {
-    background-color: rgb(253, 128, 114);
-}
-.start {
-    padding: 20px;
-    margin: 20px;
-    border-radius: 36px;
-    font-family: 'Courier';
-    font-size: 30px;
-    font-weight: 700; 
+    background: lightyellow;
 }
 
-.start:hover {
-    padding: 22px;
-    margin: 18px;
-    font-weight: bolder;
-}
-
-.wrapper {
-    padding: 20px;
-    margin: 50px;
-    display: grid;
-    place-items: center;
-    text-align: center;
-}
-
-.startBox {
+.startScreen {
     display: grid;
     place-items: center;
     text-align: center;
     max-width: 750px;
+    height: auto;
+}
+
+.hide {
+    display: none;
+}
+
+.wrapper {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 20px;
+    margin: 50px;
+}
+
+#highScoreBtn {
+    display: inline-block;
+}
+
+#startBtn {
+    line-height: 52px;
+    border-radius: 36px;
+    font-family: 'Courier';
+    font-size: 32px;
+    font-weight: 600; 
 }
