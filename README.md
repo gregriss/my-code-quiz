@@ -12,8 +12,7 @@ Simply click the start button to begin the quiz.
 
 Once you've begun, click an answer button for each question. The program will keep track of your score and show your results when you're finished. 
 
-![Example Quiz Question]
-## Credits
+![Example Quiz Question](images/question-example.png)
 
 ## License
 
