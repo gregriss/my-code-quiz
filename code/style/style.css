@@ -1,7 +1,3 @@
-* { 
-    box-sizing: border-box;
-}
-
 body {
     background-color: rgb(39, 39, 39);
     color: green;
@@ -17,6 +13,7 @@ header {
 
 button,
 #submit {
+    display: inline;
     padding: 12px;
     margin: 20px;
     background-color: rgb(156, 172, 187);
@@ -36,8 +33,12 @@ button:hover {
     font-weight: 600;
 }
 
-::selection {
-    background: lightyellow;
+input {
+    padding: 10px;
+    max-width: 20%;
+    line-height: 32px;
+    font-size: 28px;
+    font-family: Courier;
 }
 
 .container {
@@ -77,4 +78,8 @@ button:hover {
     font-family: 'Courier';
     font-size: 32px;
     font-weight: 600; 
+}
+
+::selection {
+    background: lightyellow;
 }

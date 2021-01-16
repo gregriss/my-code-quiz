@@ -6,6 +6,13 @@ This timed code quiz tests the user's knowledge of fundamental JavaScript concep
 
 ## Usage
 
+Simply click the start button to begin the quiz.
+
+![Quiz Homepage](images/quiz-home.png)
+
+Once you've begun, click an answer button for each question. The program will keep track of your score and show your results when you're finished. 
+
+![Example Quiz Question]
 ## Credits
 
 ## License
@@ -29,5 +36,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-## Tests

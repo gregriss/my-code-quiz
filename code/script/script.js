@@ -1,7 +1,7 @@
 
-var userScore = 0;
-var timeEl = document.querySelector(".time");
-var secsRemain = 30;
+// var userScore = 0;
+// var timeEl = document.querySelector(".time");
+// var secsRemain = 30;
 
 var startBtn = document.querySelector("#startBtn");
 var startScreen = document.querySelector(".startScreen");
@@ -13,7 +13,7 @@ var containerTag = document.querySelector(".container");
 var resultTag = document.querySelector(".result");
 var endScreen = document.querySelector(".endScreen");
 
-var submitBtn = document.querySelector("#submit");
+// var submitBtn = document.querySelector("#submit");
 
 // var highScoreScreen = document.querySelector(".highScoreScreen");
 // var highScores = document.querySelector(".highScores");
@@ -21,16 +21,16 @@ var submitBtn = document.querySelector("#submit");
 // var clearBtn = document.querySelector("#clearBtn");
 
 
-var questionIndex = 0;
-var questionArr = [
+questionIndex = 0;
+questionArr = [
     {
         question: 'Which function is used primarily for debugging?',
-        answerIndex: 0, 
+        answerIndex: 0,
         choices: [
-          'console.log',
-          'debug.My.Life',
-          'console.frog',
-          'console.debug'
+            'console.log',
+            'debug.My.Life',
+            'console.frog',
+            'console.debug'
         ]
     },
     {
@@ -41,13 +41,13 @@ var questionArr = [
             '**',
             '||',
             '@@'
-        ] 
+        ]
     },
     {
-        question:'Which of these repeats a block of code until a specified condition evaluates to false?',
+        question: 'Which of these repeats a block of code until a specified condition evaluates to false?',
         answerIndex: 3,
         choices: [
-            'function', 
+            'function',
             'conditional',
             'object',
             'for loop'
@@ -102,7 +102,7 @@ var questionArr = [
             '#',
             '='
         ]
-    },    
+    },
     {
         question: 'What was the first browser to support Javscript?',
         answerIndex: 1,
@@ -145,56 +145,64 @@ var questionArr = [
 //     showNextQuestion();
 // };
 
-var timeSet = function() {
-    var timeInterval = setInterval(function() {
+var userScore = 0;
+var timeEl = document.querySelector(".time");
+var secsRemain = 30;
+
+var timeSet = function () {
+    var timeInterval = setInterval(function () {
+        
+        i = 0;
         secsRemain--;
         timeEl.textContent = "Time: " + secsRemain;
-        if (secsRemain < 1) {
+        if (secsRemain < 1 || questionArr[questionIndex] >= 9) {
             clearInterval(timeInterval);
+            timeEl.textContent = "Time: 0";
             endGame();
         }
+        else {
+            showNextQuestion();
+        }
     }, 1000);
+    
 };
 
-var showNextQuestion = function() {
+var showNextQuestion = function () {
     // starting with empty tag
     containerTag.textContent = "";
-
-    timeSet();
-
-    // creating a tag to put question text inside
+    // timeSet();
+    // creating a question tag, appending it to container, putting array question into it
     var questionTag = document.createElement("h2");
-    // appending new tag to the container that will house it
     containerTag.appendChild(questionTag);
-    // saying that the text of the question tag will follow the current index inside question array
     questionTag.textContent = questionArr[questionIndex].question;
-
-    // making a list tag for the multiple choice options 
+    // making a list tag for the multiple choice options, append to container, putting answer choices into it 
     var choiceListTag = document.createElement("ol");
-    // appending choice tag to the container
     containerTag.appendChild(choiceListTag);
-    // text of choice list will follow current index within question array
     choiceListTag.textContent = questionArr[i];
 
     // looping through each question 
     for (var i = 0; i < questionArr[questionIndex].choices.length; i++) {
+        // making a button for each answer choice, putting array choices into subsequent buttons, giving each button an index id, appending to choice list tag
         var choiceTag = document.createElement("button");
         choiceTag.textContent = (questionArr[questionIndex].choices[i]);
         choiceTag.setAttribute('id', i);
         choiceListTag.appendChild(choiceTag);
-    
-        choiceTag.addEventListener("click", function(event){
+        // adding event listener to all answer choice buttons
+        choiceTag.addEventListener("click", function (event) {
+            // making sure only the clicked button is targeted
             event.stopPropagation();
-            console.log(event.target);
-            // console.log(questionArr[i]);
+            // console.log(event.target);
+
+            // clearing out result of previous question 
+            resultTag.textContent = "";
+
+            // creating a variable for which answer button is clicked, determining it's id 
             var answerClicked = parseInt(event.target.id);
-            // console.log(questionArr[i].choices);
-            // parseInt('data-index', i);
-            // if (questionArr[i].answerIndex === questionArr[i].choices[i]){
+            // if answer user clicked is equal to the "answer index" (the correct answer)...
             if (answerClicked === questionArr[questionIndex].answerIndex) {
-                // adding 1 point to user's score
+                // add 1 point to user's score
                 userScore++;
-                // logging user's score to the console
+                // log user's score to the console
                 console.log("User Score: " + userScore);
                 // storing user's score in local storage
                 localStorage.setItem("User Score", userScore);
@@ -208,17 +216,18 @@ var showNextQuestion = function() {
                 correctText.textContent = "Correct!";
                 // console.log(questionArr[i].answerIndex[i]);
                 // containerTag.textContent = "";
-            
+
                 questionIndex++;
-            
+
                 showNextQuestion();
             }
-            else  {
+            else {
                 // taking 1 point from user's score 
                 userScore--;
-                
+                // taking away 5 seconds from the timer if a question is answered incorrectly
+                secsRemain = (secsRemain - 5);
                 console.log("User Score: " + userScore);
-            
+
                 localStorage.setItem("User Score", userScore);
 
                 console.log("Incorrect!");
@@ -230,77 +239,82 @@ var showNextQuestion = function() {
                 questionIndex++;
                 showNextQuestion();
             }
-
-            
-            
         });
     };
-    
+
 };
 
-// var pauseTime = function() {
+// var pauseTime = function () {
 
 // }
 
-var endGame = function() {
-    containterTag.textContent = "";
+var endGame = function () {
+    containerTag.textContent = "";
     resultTag.textContent = "";
     localStorage.getItem("User Score");
     var displayScore = document.createElement("h1");
     containerTag.appendChild(displayScore);
-    displayScore.textContent = userScore;
-    // questionScreen.classList.add("hide");
-    // highScoreScreen.classList.add("hide");
-    // endScreen.classList.remove("hide");
-} 
-// var goBack = function() {
-//     highScoreScreen.classList.add("hide");
-//     startScreen.classList.remove("hide");
-// };
+    displayScore.textContent = "Game Over! Your Score is: " + userScore;
+    var addIntialsMessage = document.createElement("h3");
+    containerTag.appendChild(addIntialsMessage);
+    addIntialsMessage.textContent = "Add your initials in the box below!";
 
-// var clearHighScores = function() {
+    var userInitials = document.createElement("input");
+    containerTag.appendChild(userInitials);
+    userInitials.textContent = "";
+    var submitBtn = document.createElement("button");
+    containerTag.appendChild(submitBtn);
+    submitBtn.textContent = "Submit";
+
+    submitBtn.addEventListener("click", function () {
+        var userInitialsInput = userInitials.textContent;
+        localStorage.setItem("User Intials", JSON.stringify(userInitialsInput));
+        viewHighScores();
+    });
+};
+var goBack = function () {
+    highScoreScreen.classList.add("hide");
+    startScreen.classList.remove("hide");
+};
+
+// var clearHighScores = function () {
 //     highScores.textContent = "";
 // }
-var viewHighScores = function(event) {
-    event.preventDefault();
+var viewHighScores = function (event) {
+    // event.preventDefault();
     containerTag.textContent = "";
     var highScoresHeading = document.createElement("h1");
     containerTag.appendChild(highScoresHeading);
     highScoresHeading.textContent = "High Scores";
-    var highScoresList = document.createElement("input");
+    var highScoresList = document.createElement("h3");
     containerTag.appendChild(highScoresList);
-    highScoresList.style.lineHeight = "32px";
-    highScoresList.style.fontFamily = "Courier";
-    highScoresList.style.fontSize = "28px";
-    highScoresList.textContent = ""; // need to put data here from local storage
+    
+    highScoresList.textContent = localStorage.getItem("User Score", JSON.stringify(userScore)); // need to put data here from local storage
     var goBackBtn = document.createElement("button");
     containerTag.appendChild(goBackBtn);
     goBackBtn.textContent = "Go Back";
     var clearHighScoresBtn = document.createElement("button");
     containerTag.appendChild(clearHighScoresBtn);
     clearHighScoresBtn.textContent = "Clear";
+    
+    goBackBtn.addEventListener("click", function (event) {
+        // console.log(event.target);
+        // containerTag.textContent = "";
 
-
-    goBackBtn.addEventListener("click", function(event){
-        console.log(event.target);
-        containerTag.textContent = "";
-        containerTag.textContent = startScreen;
+        // takes user back to home page
+        location.reload();
     });
 
-    clearHighScoresBtn.addEventListener("click", function(event){
+    clearHighScoresBtn.addEventListener("click", function(event) {
         console.log(event.target);
+        localStorage.removeItem("User Score");
+        localStorage.removeItem("User Initials");
         highScoresList.textContent = "";
-        console.log(highScoresList.textContent);
     });
-    // startScreen.classList.add("hide");
-    // endScreen.classList.add("hide");
-    // questionScreen.classList.add("hide");
-    // highScoreScreen.classList.remove("hide");
 };
 
-// remember what I'm changing around down here
-startBtn.addEventListener("click", showNextQuestion); // <-- had startGame function there before
+// startBtn.addEventListener("click", showNextQuestion);
+startBtn.addEventListener("click", timeSet);
 highScoreBtn.addEventListener("click", viewHighScores);
 // timeEl.addEventListener("click", pauseTime);
-
-submitBtn.addEventListener("click", viewHighScores);
+// submitBtn.addEventListener("click", viewHighScores);
