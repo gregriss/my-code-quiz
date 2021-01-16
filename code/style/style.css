@@ -73,6 +73,7 @@ input {
 }
 
 #startBtn {
+    margin-top: 50px;
     line-height: 56px;
     border-radius: 48px;
     font-family: 'Courier';

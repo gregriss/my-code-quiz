@@ -2,15 +2,15 @@
 
 ## Description
 
-This timed code quiz tests the user's knowledge of fundamental JavaScript concepts through several multiple choice questions. 
+This timed quiz tests your knowledge of fundamental JavaScript concepts through several multiple choice questions. The time remaining is displayed in the upper right-hand corner. Don't take too long to answer each question, but also keep in mind that a wrong answer will subtract 5 seconds from your remaining time. Enjoy!
 
 ## Usage
 
-Simply click the start button to begin the quiz.
+Simply click the start button to begin the quiz. The buttons will light up when you hover over them, just to give you a little pre-game excitement. 
 
 ![Quiz Homepage](images/quiz-home.png)
 
-Once you've begun, click an answer button for each question. The program will keep track of your score and show your results when you're finished. 
+Once you've begun, click an answer button for each question. The program will keep track of your score and show your results when you're finished. Click the High Scores button to view or clear the High Scores.
 
 ![Example Quiz Question](images/question-example.png)
 

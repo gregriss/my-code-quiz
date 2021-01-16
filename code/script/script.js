@@ -1,8 +1,3 @@
-
-// var userScore = 0;
-// var timeEl = document.querySelector(".time");
-// var secsRemain = 30;
-
 var startBtn = document.querySelector("#startBtn");
 var startScreen = document.querySelector(".startScreen");
 var highScoreBtn = document.querySelector("#highScoreBtn");
@@ -12,14 +7,6 @@ var containerTag = document.querySelector(".container");
 // var questionScreen = document.querySelector(".questionScreen");
 var resultTag = document.querySelector(".result");
 var endScreen = document.querySelector(".endScreen");
-
-// var submitBtn = document.querySelector("#submit");
-
-// var highScoreScreen = document.querySelector(".highScoreScreen");
-// var highScores = document.querySelector(".highScores");
-// var goBackBtn = document.querySelector("#goBackBtn");
-// var clearBtn = document.querySelector("#clearBtn");
-
 
 questionIndex = 0;
 questionArr = [
@@ -125,52 +112,39 @@ questionArr = [
     },
 ];
 
-
-// var timeSet = function() {
-//     var timeInterval = setInterval(function() {
-//         secsRemain--;
-//         timeEl.textContent = "Time: " + secsRemain;
-//         if (secsRemain < 1) {
-//             clearInterval(timeInterval);
-//             endGame();
-//         }
-//     }, 1000);
-// };
-
-// var startGame = function() {
-//     // startScreen.classList.add("hide");
-//     // questionScreen.classList.remove("hide");
-//     // startScreen.textContent = ""
-//     timeSet();  
-//     showNextQuestion();
-// };
-
+// setting user's score to zero
 var userScore = 0;
+// creating a place for the time to show up on the page
 var timeEl = document.querySelector(".time");
+// setting timer to start at 30 seconds
 var secsRemain = 30;
 
+// setting up a timer
 var timeSet = function () {
     var timeInterval = setInterval(function () {
-        
-        i = 0;
+        // decrementing time by 1 second each second
         secsRemain--;
+        // rendering timer on the page
         timeEl.textContent = "Time: " + secsRemain;
-        if (secsRemain < 1 || questionArr[questionIndex] >= 9) {
+        // stopping time and ending the game if time has run out or if all questions have been answered 
+        if (secsRemain === 0 || questionIndex > 9) {
             clearInterval(timeInterval);
             timeEl.textContent = "Time: 0";
             endGame();
         }
-        else {
-            showNextQuestion();
-        }
+    // timer decrements every 1000ms, or one second
     }, 1000);
     
 };
 
+// function to display questions
 var showNextQuestion = function () {
     // starting with empty tag
     containerTag.textContent = "";
-    // timeSet();
+    // stopping function if all questions have been answered
+    if (questionIndex > 9){
+        return;     
+    } 
     // creating a question tag, appending it to container, putting array question into it
     var questionTag = document.createElement("h2");
     containerTag.appendChild(questionTag);
@@ -191,7 +165,6 @@ var showNextQuestion = function () {
         choiceTag.addEventListener("click", function (event) {
             // making sure only the clicked button is targeted
             event.stopPropagation();
-            // console.log(event.target);
 
             // clearing out result of previous question 
             resultTag.textContent = "";
@@ -214,29 +187,30 @@ var showNextQuestion = function () {
                 resultTag.appendChild(correctText);
                 // dictating text of new tag will say "correct"
                 correctText.textContent = "Correct!";
-                // console.log(questionArr[i].answerIndex[i]);
-                // containerTag.textContent = "";
-
-                questionIndex++;
-
+                // moving to next question info in array
+                questionIndex++; 
+                // ***
+                // calling the function again
                 showNextQuestion();
+        
             }
             else {
                 // taking 1 point from user's score 
                 userScore--;
-                // taking away 5 seconds from the timer if a question is answered incorrectly
-                secsRemain = (secsRemain - 5);
-                console.log("User Score: " + userScore);
+                // subtracting 5 seconds from timer if a question is answered incorrectly
+                secsRemain -= 5;
+                // console.log("User Score: " + userScore);
 
+                // adding to user's score in local storage
                 localStorage.setItem("User Score", userScore);
 
-                console.log("Incorrect!");
-
+                // displays "Incorrect" on the page
                 var incorrectText = document.createElement("h2");
                 resultTag.appendChild(incorrectText);
                 incorrectText.textContent = "Incorrect!";
-
+                // moving to next question info in array
                 questionIndex++;
+                // calling the function again
                 showNextQuestion();
             }
         });
@@ -245,13 +219,13 @@ var showNextQuestion = function () {
 };
 
 // var pauseTime = function () {
-
 // }
 
 var endGame = function () {
+    
     containerTag.textContent = "";
     resultTag.textContent = "";
-    localStorage.getItem("User Score");
+    localStorage.getItem("User Score", JSON.parse(userScore));
     var displayScore = document.createElement("h1");
     containerTag.appendChild(displayScore);
     displayScore.textContent = "Game Over! Your Score is: " + userScore;
@@ -272,14 +246,7 @@ var endGame = function () {
         viewHighScores();
     });
 };
-var goBack = function () {
-    highScoreScreen.classList.add("hide");
-    startScreen.classList.remove("hide");
-};
 
-// var clearHighScores = function () {
-//     highScores.textContent = "";
-// }
 var viewHighScores = function (event) {
     // event.preventDefault();
     containerTag.textContent = "";
@@ -315,6 +282,7 @@ var viewHighScores = function (event) {
 
 // startBtn.addEventListener("click", showNextQuestion);
 startBtn.addEventListener("click", timeSet);
+startBtn.addEventListener("click", showNextQuestion);
 highScoreBtn.addEventListener("click", viewHighScores);
 // timeEl.addEventListener("click", pauseTime);
 // submitBtn.addEventListener("click", viewHighScores);
