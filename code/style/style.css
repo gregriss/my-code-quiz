@@ -40,24 +40,31 @@ button:hover {
     background: lightyellow;
 }
 
+.container {
+    display: grid;
+    place-items: center; 
+    text-align: center; 
+    padding: 20px;
+    margin: 75px;
+}
+
 .startScreen {
     display: grid;
-    place-items: center;
-    text-align: center;
+    place-items: center; 
+    text-align: center; 
     max-width: 750px;
     height: auto;
 }
 
+.highScoreScreen { 
+    text-align: center; 
+} 
+
+.result {
+    text-align: center;
+}
 .hide {
     display: none;
-}
-
-.wrapper {
-    display: grid;
-    place-items: center;
-    text-align: center;
-    padding: 20px;
-    margin: 50px;
 }
 
 #highScoreBtn {
@@ -65,8 +72,8 @@ button:hover {
 }
 
 #startBtn {
-    line-height: 52px;
-    border-radius: 36px;
+    line-height: 56px;
+    border-radius: 48px;
     font-family: 'Courier';
     font-size: 32px;
     font-weight: 600; 

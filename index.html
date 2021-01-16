@@ -15,44 +15,31 @@
           <button class="time">Time: 30</button>
         </div>
     </header>    
-    <div class="wrapper">
+    <main class="container">
         <div class="startScreen">
           <h1 id="start-h1" class="startScreen">My Code Quiz</h1>
           <p id="start-p" class="startScreen">This timed quiz will test your knowledge of fundamental JavaScript concepts. Incorrect answers will deduct 5 seconds from the timer, and 1 point from your score. Have fun and good luck!</p>
           <button id="startBtn" class="startScreen">Start</button>
         </div>
         <div class="questionScreen hide"> 
-            <h2>Question Text Here</h2>
-            <div>
-                <input type="radio" id="a1" name="a1" value="answer1">
-                <label for="a1">answer</label><br>
-                <input type="radio" id="a2" name="a2" value="answer2">
-                <label for="a2">answer</label><br>
-                <input type="radio" id="a3" name="a3" value="answer3">
-                <label for="a3">answer</label><br>
-                <input type="radio" id="a4" name="a4" value="answer4">
-                <label for="a4">answer</label>
-            </div>
-        </div>
-        <div class="qResult hide">
-            <h2 class="hide">Correct!</h2>
-            <h2 class="hide">Incorrect</h2>
         </div>
         <div class="endScreen hide">
             <h1>All Done!</h1>
             <h2>Your Total Score is </h2>
-            <form>
+            <form name="submit-high-scores">
                 <label for="initials">Your Initials: </label>
-                <input type="text" id="initials" name="initials">
-                <input type="submit" id="submit" value="Submit">
+                <input type="text" id="initials" name="initials" />
+                <input type="submit" id="submit" value="Submit" />
             </form>
         </div>
         <div class="highScoreScreen hide">
             <h1>High Scores</h1>
-            <p class="highScores">GAR 7</p>
+            <p class="highScores"></p>
             <button id="goBackBtn">Go Back</button>
             <button id="clearBtn">Clear High Scores</button>
         </div>
+    </main>
+    <div class="result">    
     </div>
     <script src="code/script/script.js"></script>
        
