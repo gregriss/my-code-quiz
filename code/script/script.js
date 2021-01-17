@@ -4,7 +4,6 @@ var highScoreBtn = document.querySelector("#highScoreBtn");
 
 // variables where content shows up on the page
 var containerTag = document.querySelector(".container");
-// var questionScreen = document.querySelector(".questionScreen");
 var resultTag = document.querySelector(".result");
 var endScreen = document.querySelector(".endScreen");
 
@@ -127,7 +126,7 @@ var timeSet = function () {
         // rendering timer on the page
         timeEl.textContent = "Time: " + secsRemain;
         // stopping time and ending the game if time has run out or if all questions have been answered 
-        if (secsRemain === 0 || questionIndex > 9) {
+        if (secsRemain <= 0 || questionIndex > 9) {
             clearInterval(timeInterval);
             timeEl.textContent = "Time: 0";
             endGame();
@@ -165,10 +164,8 @@ var showNextQuestion = function () {
         choiceTag.addEventListener("click", function (event) {
             // making sure only the clicked button is targeted
             event.stopPropagation();
-
             // clearing out result of previous question 
             resultTag.textContent = "";
-
             // creating a variable for which answer button is clicked, determining it's id 
             var answerClicked = parseInt(event.target.id);
             // if answer user clicked is equal to the "answer index" (the correct answer)...
@@ -199,11 +196,10 @@ var showNextQuestion = function () {
                 userScore--;
                 // subtracting 5 seconds from timer if a question is answered incorrectly
                 secsRemain -= 5;
-                // console.log("User Score: " + userScore);
-
+                // shows user score in the console
+                console.log("User Score: " + userScore);
                 // adding to user's score in local storage
                 localStorage.setItem("User Score", userScore);
-
                 // displays "Incorrect" on the page
                 var incorrectText = document.createElement("h2");
                 resultTag.appendChild(incorrectText);
@@ -217,25 +213,24 @@ var showNextQuestion = function () {
     };
 
 };
-
-// var pauseTime = function () {
-// }
-
+// function to run if game is over
 var endGame = function () {
-    
+    // clearing containers
     containerTag.textContent = "";
     resultTag.textContent = "";
+    // retrieving user's score from local storage
     localStorage.getItem("User Score", JSON.parse(userScore));
     var displayScore = document.createElement("h1");
     containerTag.appendChild(displayScore);
+    // showing Game Over screen and user's score
     displayScore.textContent = "Game Over! Your Score is: " + userScore;
     var addIntialsMessage = document.createElement("h3");
     containerTag.appendChild(addIntialsMessage);
+    // allowing user to type their initials 
     addIntialsMessage.textContent = "Add your initials in the box below!";
-
     var userInitials = document.createElement("input");
     containerTag.appendChild(userInitials);
-    userInitials.textContent = "";
+    userInitials = userInitials.textContent;
     var submitBtn = document.createElement("button");
     containerTag.appendChild(submitBtn);
     submitBtn.textContent = "Submit";
@@ -246,43 +241,41 @@ var endGame = function () {
         viewHighScores();
     });
 };
-
+// function to run to let user see high scores
 var viewHighScores = function (event) {
     // event.preventDefault();
+    // clearing the container
     containerTag.textContent = "";
+    // creating elements to make high scores page
     var highScoresHeading = document.createElement("h1");
     containerTag.appendChild(highScoresHeading);
     highScoresHeading.textContent = "High Scores";
     var highScoresList = document.createElement("h3");
     containerTag.appendChild(highScoresList);
-    
+    // retrieving user's score from local storage
     highScoresList.textContent = localStorage.getItem("User Score", JSON.stringify(userScore)); // need to put data here from local storage
+    // building buttons to clear high scores or go to homepage
     var goBackBtn = document.createElement("button");
     containerTag.appendChild(goBackBtn);
     goBackBtn.textContent = "Go Back";
     var clearHighScoresBtn = document.createElement("button");
     containerTag.appendChild(clearHighScoresBtn);
     clearHighScoresBtn.textContent = "Clear";
-    
-    goBackBtn.addEventListener("click", function (event) {
-        // console.log(event.target);
-        // containerTag.textContent = "";
 
-        // takes user back to home page
+    // goes back to homepage if user clicks Go Back
+    goBackBtn.addEventListener("click", function (event) {
         location.reload();
     });
-
+    // clears display of high scores and clears local storage
     clearHighScoresBtn.addEventListener("click", function(event) {
-        console.log(event.target);
+        // console.log(event.target);
         localStorage.removeItem("User Score");
         localStorage.removeItem("User Initials");
         highScoresList.textContent = "";
     });
 };
 
-// startBtn.addEventListener("click", showNextQuestion);
+// event listeners to trigger above functions when clicked
 startBtn.addEventListener("click", timeSet);
 startBtn.addEventListener("click", showNextQuestion);
 highScoreBtn.addEventListener("click", viewHighScores);
-// timeEl.addEventListener("click", pauseTime);
-// submitBtn.addEventListener("click", viewHighScores);
