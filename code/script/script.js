@@ -1,13 +1,16 @@
+
+
+// grabbing buttons on the start page, connecting to JS 
 var startBtn = document.querySelector("#startBtn");
-var startScreen = document.querySelector(".startScreen");
 var highScoreBtn = document.querySelector("#highScoreBtn");
 
-// variables where content shows up on the page
+// making variables for containers where content will appear on the page
 var containerTag = document.querySelector(".container");
 var resultTag = document.querySelector(".result");
-var endScreen = document.querySelector(".endScreen");
 
+// defining starting point for questions
 questionIndex = 0;
+// array of questions objects with choice and answer index values
 questionArr = [
     {
         question: 'Which function is used primarily for debugging?',
@@ -111,6 +114,8 @@ questionArr = [
     },
 ];
 
+// arrray to store users initials and scores
+var allUsers = [];
 // setting user's score to zero
 var userScore = 0;
 // creating a place for the time to show up on the page
@@ -153,7 +158,7 @@ var showNextQuestion = function () {
     containerTag.appendChild(choiceListTag);
     choiceListTag.textContent = questionArr[i];
 
-    // looping through each question 
+    // looping through each choice in a question 
     for (var i = 0; i < questionArr[questionIndex].choices.length; i++) {
         // making a button for each answer choice, putting array choices into subsequent buttons, giving each button an index id, appending to choice list tag
         var choiceTag = document.createElement("button");
@@ -172,10 +177,8 @@ var showNextQuestion = function () {
             if (answerClicked === questionArr[questionIndex].answerIndex) {
                 // add 1 point to user's score
                 userScore++;
-                // log user's score to the console
-                console.log("User Score: " + userScore);
-                // storing user's score in local storage
-                localStorage.setItem("User Score", userScore);
+                // // storing user's score in local storage
+                // localStorage.setItem("User Score", userScore);
                 // logging correct to console
                 console.log('correct!');
                 // making element that says "correct" at bottom of page
@@ -189,7 +192,7 @@ var showNextQuestion = function () {
                 // ***
                 // calling the function again
                 showNextQuestion();
-        
+    
             }
             else {
                 // taking 1 point from user's score 
@@ -198,8 +201,9 @@ var showNextQuestion = function () {
                 secsRemain -= 5;
                 // shows user score in the console
                 console.log("User Score: " + userScore);
-                // adding to user's score in local storage
-                localStorage.setItem("User Score", userScore);
+                // // adding to user's score in local storage
+                // localStorage.setItem("User Score", userScore);
+                console.log("Incorrect :(");
                 // displays "Incorrect" on the page
                 var incorrectText = document.createElement("h2");
                 resultTag.appendChild(incorrectText);
@@ -218,31 +222,34 @@ var endGame = function () {
     // clearing containers
     containerTag.textContent = "";
     resultTag.textContent = "";
-    // retrieving user's score from local storage
-    localStorage.getItem("User Score", JSON.parse(userScore));
+
+
+    // retrieving last user's score from local storage
+            // localStorage.getItem("User Score", JSON.parse(userScore));
     var displayScore = document.createElement("h1");
     containerTag.appendChild(displayScore);
     // showing Game Over screen and user's score
     displayScore.textContent = "Game Over! Your Score is: " + userScore;
-    var addIntialsMessage = document.createElement("h3");
-    containerTag.appendChild(addIntialsMessage);
+    var addInitialsMessage = document.createElement("h3");
+    containerTag.appendChild(addInitialsMessage);
     // allowing user to type their initials 
-    addIntialsMessage.textContent = "Add your initials in the box below!";
-    var userInitials = document.createElement("input");
-    containerTag.appendChild(userInitials);
-    userInitials = userInitials.textContent;
+    addInitialsMessage.textContent = "Add your initials in the box below!";
+    var typeInitials = document.createElement("input");
+    containerTag.appendChild(typeInitials);
+    typeInitials = typeInitials.textContent;
     var submitBtn = document.createElement("button");
     containerTag.appendChild(submitBtn);
     submitBtn.textContent = "Submit";
 
     submitBtn.addEventListener("click", function () {
-        var userInitialsInput = userInitials.textContent;
-        localStorage.setItem("User Intials", JSON.stringify(userInitialsInput));
+
+        var userInitialsInput = typeInitials.textContent;
+        localStorage.setItem("User Initials", JSON.stringify(userInitialsInput));
         viewHighScores();
     });
 };
 // function to run to let user see high scores
-var viewHighScores = function (event) {
+var viewHighScores = function () {
     // event.preventDefault();
     // clearing the container
     containerTag.textContent = "";
@@ -252,6 +259,7 @@ var viewHighScores = function (event) {
     highScoresHeading.textContent = "High Scores";
     var highScoresList = document.createElement("h3");
     containerTag.appendChild(highScoresList);
+
     // retrieving user's score from local storage
     highScoresList.textContent = localStorage.getItem("User Score", JSON.stringify(userScore)); // need to put data here from local storage
     // building buttons to clear high scores or go to homepage
@@ -274,6 +282,12 @@ var viewHighScores = function (event) {
         highScoresList.textContent = "";
     });
 };
+
+function render() {
+    if (localStorage.getItem("user") !== null){
+        
+    }
+}
 
 // event listeners to trigger above functions when clicked
 startBtn.addEventListener("click", timeSet);

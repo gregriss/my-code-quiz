@@ -4,6 +4,9 @@
 
 This timed quiz tests your knowledge of fundamental JavaScript concepts through several multiple choice questions. The time remaining is displayed in the upper right-hand corner. Don't take too long to answer each question, but also keep in mind that a wrong answer will subtract 5 seconds from your remaining time. Enjoy!
 
+The application is deployed at https://gregriss.github.io/my-code-quiz/
+
+
 ## Usage
 
 Simply click the start button to begin the quiz. The buttons will light up when you hover over them, just to give you a little pre-game excitement. 
