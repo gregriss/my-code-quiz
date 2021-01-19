@@ -8,6 +8,7 @@ body {
 header {
     display: flex;
     justify-content: space-between;
+    padding: 3px;
     border-bottom: solid rgb(156, 172, 187) 1px;
 }
 
@@ -19,18 +20,11 @@ button,
     background-color: rgb(156, 172, 187);
     border: none;
     border-radius: 8px;
-    font-family: 'Courier New';
+    font-family: 'Courier';
     font-size: 24px;
     font-weight: 300;
     cursor: pointer;
     transition-duration: 175ms;
-}
-
-button:hover {
-    padding: 14px;
-    margin: 18px;
-    background-color: rgb(178, 250, 150);
-    font-weight: 600;
 }
 
 input {
@@ -50,35 +44,46 @@ input {
 }
 
 .startScreen {
-    display: grid;
-    place-items: center; 
-    text-align: center; 
     max-width: 750px;
     height: auto;
 }
 
-.highScoreScreen { 
-    text-align: center; 
-} 
-
 .result {
     text-align: center;
-}
-.hide {
-    display: none;
-}
-
-#highScoreBtn {
-    display: inline-block;
+    animation: result 3s linear;
+    animation-fill-mode: backwards;
 }
 
+@keyframes result {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+#start-p {
+    font-family: 'Courier';
+    letter-spacing: 3px;
+    line-height: 30px;
+}
 #startBtn {
-    margin-top: 50px;
+    margin: 40px;
     line-height: 56px;
     border-radius: 48px;
-    font-family: 'Courier';
     font-size: 32px;
     font-weight: 600; 
+}
+
+button:hover {
+    padding: 14px;
+    margin: 18px;
+    background-color: rgb(178, 250, 150);
+    font-weight: 600;
+}
+
+#startBtn:hover {
+    padding: 16px;
+    margin: 38px;
+    background-color: rgb(178, 250, 150);
+    
 }
 
 ::selection {

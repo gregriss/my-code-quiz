@@ -119,7 +119,7 @@ var allUsers = [];
 // setting user's score to zero
 var userScore = 0;
 // creating a place for the time to show up on the page
-var timeEl = document.querySelector(".time");
+var timeEl = document.querySelector("#time");
 // setting timer to start at 30 seconds
 var secsRemain = 30;
 
@@ -130,10 +130,16 @@ var timeSet = function () {
         secsRemain--;
         // rendering timer on the page
         timeEl.textContent = "Time: " + secsRemain;
-        // stopping time and ending the game if time has run out or if all questions have been answered 
+        // timer turns red when there are only 5 seconds left
+        if (secsRemain <= 5){
+            document.getElementById("time").style.backgroundColor = "rgb(240, 60,60)";
+        }
+        // if time has run out or if all questions have been answered, stop timer, display 0 on timer, revert to normal button color
         if (secsRemain <= 0 || questionIndex > 9) {
             clearInterval(timeInterval);
             timeEl.textContent = "Time: 0";
+            timeEl.setAttribute("style", "background-color:  rgb(156, 172, 187)");
+            // call function to end the game
             endGame();
         }
     // timer decrements every 1000ms, or one second
@@ -180,7 +186,8 @@ var showNextQuestion = function () {
                 // // storing user's score in local storage
                 // localStorage.setItem("User Score", userScore);
                 // logging correct to console
-                console.log('correct!');
+                console.log('Correct!');
+                console.log("Current Score: " + userScore);
                 // making element that says "correct" at bottom of page
                 var correctText = document.createElement("h2");
                 // appending new tag to div at bottom of page
@@ -195,16 +202,16 @@ var showNextQuestion = function () {
     
             }
             else {
-                // taking 1 point from user's score 
-                userScore--;
                 // subtracting 5 seconds from timer if a question is answered incorrectly
                 secsRemain -= 5;
+                // logging Incorrect to the console
+                console.log("Incorrect :(");
                 // shows user score in the console
-                console.log("User Score: " + userScore);
+                console.log("Current Score: " + userScore);
                 // // adding to user's score in local storage
                 // localStorage.setItem("User Score", userScore);
-                console.log("Incorrect :(");
-                // displays "Incorrect" on the page
+            
+                // creating an element that displays "Incorrect" on the page
                 var incorrectText = document.createElement("h2");
                 resultTag.appendChild(incorrectText);
                 incorrectText.textContent = "Incorrect!";
@@ -222,29 +229,42 @@ var endGame = function () {
     // clearing containers
     containerTag.textContent = "";
     resultTag.textContent = "";
-
-
-    // retrieving last user's score from local storage
-            // localStorage.getItem("User Score", JSON.parse(userScore));
+    // creating elements for results of the quiz
     var displayScore = document.createElement("h1");
     containerTag.appendChild(displayScore);
     // showing Game Over screen and user's score
     displayScore.textContent = "Game Over! Your Score is: " + userScore;
-    var addInitialsMessage = document.createElement("h3");
-    containerTag.appendChild(addInitialsMessage);
+    var initialsMessage = document.createElement("h3");
+    containerTag.appendChild(initialsMessage);
     // allowing user to type their initials 
-    addInitialsMessage.textContent = "Add your initials in the box below!";
-    var typeInitials = document.createElement("input");
-    containerTag.appendChild(typeInitials);
-    typeInitials = typeInitials.textContent;
+    initialsMessage.textContent = "Add your initials in the box below";
+    var initialsInput = document.createElement("input");
+    containerTag.appendChild(initialsInput);
+    // creating a button for user to click to submit their initials
     var submitBtn = document.createElement("button");
     containerTag.appendChild(submitBtn);
     submitBtn.textContent = "Submit";
 
+    // event listener to handle user input
     submitBtn.addEventListener("click", function () {
+        var initials = initialsInput.innerHTML;
+        // creating an object to store initials with user's score
+        var user = {
+            initials: initialsInput.value.trim(),
+            score: userScore
+        };
 
-        var userInitialsInput = typeInitials.textContent;
-        localStorage.setItem("User Initials", JSON.stringify(userInitialsInput));
+        console.log(user);
+
+        // validate user's initials
+        if(user.initials === ""){
+            alert("Error", "Initials cannot be blank");
+        }
+        else {
+            alert("Success. Your name and score have been stored.");
+        }
+        // storing user's initials and score in local storage
+        localStorage.setItem("user", JSON.stringify(user));
         viewHighScores();
     });
 };
@@ -259,9 +279,15 @@ var viewHighScores = function () {
     highScoresHeading.textContent = "High Scores";
     var highScoresList = document.createElement("h3");
     containerTag.appendChild(highScoresList);
-
-    // retrieving user's score from local storage
-    highScoresList.textContent = localStorage.getItem("User Score", JSON.stringify(userScore)); // need to put data here from local storage
+    
+    // checking if there is any data stored yet 
+    if(localStorage.getItem("user") !== null){
+        
+        var lastUser = JSON.parse(localStorage.getItem("user"));
+        // retrieving user's score from local storage
+        highScoresList.textContent = lastUser.initials + "   " + lastUser.score; 
+        
+    };
     // building buttons to clear high scores or go to homepage
     var goBackBtn = document.createElement("button");
     containerTag.appendChild(goBackBtn);
@@ -275,19 +301,13 @@ var viewHighScores = function () {
         location.reload();
     });
     // clears display of high scores and clears local storage
-    clearHighScoresBtn.addEventListener("click", function(event) {
-        // console.log(event.target);
-        localStorage.removeItem("User Score");
-        localStorage.removeItem("User Initials");
+    clearHighScoresBtn.addEventListener("click", function() {
+        // clearing local storage 
+        localStorage.removeItem("user");
+        // deleting scores from the page display
         highScoresList.textContent = "";
     });
 };
-
-function render() {
-    if (localStorage.getItem("user") !== null){
-        
-    }
-}
 
 // event listeners to trigger above functions when clicked
 startBtn.addEventListener("click", timeSet);
