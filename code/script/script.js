@@ -115,7 +115,7 @@ questionArr = [
 ];
 
 // arrray to store users initials and scores
-var allUsers = [];
+// var allUsers = [];
 // setting user's score to zero
 var userScore = 0;
 // creating a place for the time to show up on the page
@@ -255,7 +255,8 @@ var endGame = function () {
         };
 
         console.log(user);
-
+        allUsers.push(user);
+        console.log(allUsers);
         // validate user's initials
         if(user.initials === ""){
             alert("Error", "Initials cannot be blank");
@@ -264,13 +265,16 @@ var endGame = function () {
             alert("Success. Your name and score have been stored.");
         }
         // storing user's initials and score in local storage
-        localStorage.setItem("user", JSON.stringify(user));
+        // localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("All Users", JSON.stringify(allUsers));
         viewHighScores();
     });
 };
 // function to run to let user see high scores
 var viewHighScores = function () {
     // event.preventDefault();
+    // arrray to store users initials and scores
+    allUsers;
     // clearing the container
     containerTag.textContent = "";
     // creating elements to make high scores page
@@ -281,13 +285,19 @@ var viewHighScores = function () {
     containerTag.appendChild(highScoresList);
     
     // checking if there is any data stored yet 
-    if(localStorage.getItem("user") !== null){
+    // if(localStorage.getItem("user") !== null){
         
-        var lastUser = JSON.parse(localStorage.getItem("user"));
+        // var lastUser = JSON.parse(localStorage.getItem("user"));
         // retrieving user's score from local storage
-        highScoresList.textContent = lastUser.initials + "   " + lastUser.score; 
+        // highScoresList.textContent = lastUser.initials + "   " + lastUser.score; 
         
-    };
+    // };
+
+    // checking if any user data is stored 
+    if (localStorage.getItem("All Users") !== null){
+        var usersHiScores = JSON.parse(localStorage.getItem("All Users", allUsers));
+        highScoresList.textContent = allUsers.initials + allusers.score;
+    }
     // building buttons to clear high scores or go to homepage
     var goBackBtn = document.createElement("button");
     containerTag.appendChild(goBackBtn);

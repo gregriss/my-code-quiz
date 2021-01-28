@@ -1,6 +1,6 @@
 body {
     background-color: rgb(39, 39, 39);
-    color: green;
+    color: rgb(178, 250, 150);
     font-family: 'Courier';
     font-size: 22px;
 }
@@ -83,7 +83,10 @@ button:hover {
     padding: 16px;
     margin: 38px;
     background-color: rgb(178, 250, 150);
-    
+}
+
+#time:hover {
+    background-color: rgb(178, 250, 150);
 }
 
 ::selection {
