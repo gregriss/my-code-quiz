@@ -11,11 +11,11 @@ The application is deployed at https://gregriss.github.io/my-code-quiz/
 
 Simply click the start button to begin the quiz. The buttons will light up when you hover over them, just to give you a little pre-game excitement. 
 
-![Quiz Homepage](images/quiz-home.png)
+![Quiz Homepage](assets/images/quiz-home.png)
 
 Once you've begun, click an answer button for each question. The program will keep track of your score and show your results when you're finished. Click the High Scores button to view or clear the High Scores.
 
-![Example Quiz Question](images/question-example.png)
+![Example Quiz Question](assets/images/question-example.png)
 
 ## License
 
