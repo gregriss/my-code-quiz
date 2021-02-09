@@ -114,8 +114,19 @@ questionArr = [
     },
 ];
 
-// arrray to store users initials and scores
-// var allUsers = [];
+// If any hi scores exist, get them from local storage
+// if not, array to store users initials and scores is empty
+var allUsers = [];
+if (localStorage.getItem("All Users") !== null){
+    for (let i = 0; i < allUsers.length; i++) {
+    var usersHiScores = JSON.parse(localStorage.getItem("All Users", allUsers));
+    highScoresList.textContent = allUsers[i].initials + "  " + allUsers[i].score;
+    }
+}
+else {
+    allUsers = [];
+};
+
 // setting user's score to zero
 var userScore = 0;
 // creating a place for the time to show up on the page
@@ -271,10 +282,11 @@ var endGame = function () {
     });
 };
 // function to run to let user see high scores
-var viewHighScores = function () {
-    // event.preventDefault();
+var viewHighScores = function (event) {
+    event.preventDefault();
+    console.log(event.target);
     // arrray to store users initials and scores
-    allUsers;
+    // allUsers;
     // clearing the container
     containerTag.textContent = "";
     // creating elements to make high scores page
@@ -292,11 +304,12 @@ var viewHighScores = function () {
         // highScoresList.textContent = lastUser.initials + "   " + lastUser.score; 
         
     // };
-
     // checking if any user data is stored 
     if (localStorage.getItem("All Users") !== null){
+        for (let i = 0; i < allUsers.length; i++) {
         var usersHiScores = JSON.parse(localStorage.getItem("All Users", allUsers));
-        highScoresList.textContent = allUsers.initials + allusers.score;
+        highScoresList.textContent = allUsers[i].initials + "  " + allUsers[i].score;
+        }
     }
     // building buttons to clear high scores or go to homepage
     var goBackBtn = document.createElement("button");
@@ -313,7 +326,7 @@ var viewHighScores = function () {
     // clears display of high scores and clears local storage
     clearHighScoresBtn.addEventListener("click", function() {
         // clearing local storage 
-        localStorage.removeItem("user");
+        localStorage.removeItem("All Users");
         // deleting scores from the page display
         highScoresList.textContent = "";
     });
